@@ -19,4 +19,12 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    public Employee getEmployeeById(String id) {
+        return employeeRepository.getEmployeeById(id);
+    }
+
+    public List<Employee> getEmployeeWithParams(String firstName, String lastName) {
+        return employeeRepository.getEmployeesWithParams(firstName, lastName);
+    }
+
 }
