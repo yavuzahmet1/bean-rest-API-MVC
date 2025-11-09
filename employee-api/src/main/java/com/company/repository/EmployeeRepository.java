@@ -18,4 +18,19 @@ public class EmployeeRepository {
         return employees;
     }
 
+    public Employee getEmployeeById(String id) {
+        return employees.stream()
+                        .filter(emp -> emp.getId().equals(id))
+                        .findFirst()
+                        .orElse(null);
+    }
+
+    public List<Employee> getEmployeesWithParams(String firstName, String lastName) {
+
+        return employees.stream()
+                        .filter(emp -> (firstName == null || emp.getFirstName().equalsIgnoreCase(firstName)) &&
+                                       (lastName == null || emp.getLastName().equalsIgnoreCase(lastName)))
+                        .toList();
+    }
+
 }
