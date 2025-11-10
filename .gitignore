@@ -424,3 +424,18 @@ application.yml
 # Environment specific files
 application-*.properties
 application-*.yml
+
+# Maven
+target/
+*.jar
+*.war
+*.ear
+
+# IDE
+.idea/
+*.iml
+*.iws
+
+# Build
+build/
+out/
