@@ -416,3 +416,11 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Application properties
+application.properties
+application.yml
+
+# Environment specific files
+application-*.properties
+application-*.yml
