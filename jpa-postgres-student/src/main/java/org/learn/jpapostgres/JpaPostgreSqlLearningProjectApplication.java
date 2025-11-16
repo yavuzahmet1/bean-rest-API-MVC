@@ -1,4 +1,4 @@
-package org.learning.jpapostgres;
+package org.learn.jpapostgres;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
