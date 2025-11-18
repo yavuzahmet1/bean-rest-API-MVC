@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -28,6 +31,7 @@ public class Student {
     @Column(name = "last_name",nullable = false,length = 50)
     private String lastName;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "birth_of_date",nullable = true)
     private String birthOfDate;
 
