@@ -1,5 +1,7 @@
 package org.learn.controller.impl;
 
+import java.util.List;
+
 import org.learn.controller.IStudentController;
 import org.learn.entities.Student;
 import org.learn.services.IStudentService;
@@ -8,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/api/students")
@@ -25,6 +29,26 @@ public class StudentControllerImpl implements IStudentController {
     @ResponseBody
     public Student saveStudent(@RequestBody Student student) {
         return studentService.saveStudent(student);
+    }
+
+    @GetMapping(path = "/all")
+    @Override
+    @ResponseBody
+    public List<Student> getAllStudents() {
+        return studentService.getAllStudents();
+    }
+
+    @GetMapping(path = "/all/{id}")
+    @Override
+    @ResponseBody
+    public Student getStudentById(@PathVariable Long id) {
+        return studentService.getStudentById(id);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    @Override
+    public void deleteStudentById(@PathVariable Long id) {
+        studentService.deleteStudentById(id);
     }
 
 }
