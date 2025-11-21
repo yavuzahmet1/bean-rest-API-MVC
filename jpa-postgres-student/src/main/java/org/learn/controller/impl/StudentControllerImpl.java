@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @Controller
 @RequestMapping("/api/students")
@@ -49,6 +51,13 @@ public class StudentControllerImpl implements IStudentController {
     @Override
     public void deleteStudentById(@PathVariable Long id) {
         studentService.deleteStudentById(id);
+    }
+
+   
+    @PutMapping(path = "/update/{id}")
+    @Override
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+       return studentService.updateStudent(id, student);
     }
 
 }
