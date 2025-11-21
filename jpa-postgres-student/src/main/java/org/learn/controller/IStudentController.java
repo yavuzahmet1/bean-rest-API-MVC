@@ -10,4 +10,5 @@ public interface IStudentController {
     public List<Student> getAllStudents();
     public Student getStudentById(Long id);
     public void deleteStudentById(Long id);
+    public Student updateStudent(Long id, Student student);
 }
