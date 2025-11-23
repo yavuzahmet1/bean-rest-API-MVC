@@ -1,11 +1,15 @@
 package org.learn.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.learn.dto.DtoStudent;
+import org.learn.dto.DtoSudentIU;
 import org.learn.entities.Student;
 import org.learn.repository.StudentRepository;
 import org.learn.services.IStudentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,23 +22,39 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+    public DtoStudent saveStudent(DtoSudentIU dtoStudent) {
+        Student student=new Student();
+        BeanUtils.copyProperties(dtoStudent, student);
+        Student savedStudent= studentRepository.save(student);
+        DtoStudent dtoSavedStudent=new DtoStudent();
+        BeanUtils.copyProperties(savedStudent, dtoSavedStudent);
+        return dtoSavedStudent;
         
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<DtoStudent> getAllStudents() {
+        List<DtoStudent> dtoStudentsList= new ArrayList<>();
+        List<Student> students= studentRepository.findAll();
+        for (Student student : students) {
+            DtoStudent dtoStudent=new DtoStudent();
+            BeanUtils.copyProperties(student, dtoStudent);
+            dtoStudentsList.add(dtoStudent);
+        }
+        return dtoStudentsList;
+       
     }
 
     @Override
-    public Student getStudentById(Long id) {
+    public DtoStudent getStudentById(Long id) {
+        DtoStudent dtoStudent=new DtoStudent();
          Optional<Student> optional= studentRepository.findById(id);
          if (optional.isPresent()) {
-                return optional.get(); 
+                Student student= optional.get();
+                BeanUtils.copyProperties(student, dtoStudent);
+                return dtoStudent;
          }
-         return optional.orElse(null);
+         return null;
     }
 
     @Override
