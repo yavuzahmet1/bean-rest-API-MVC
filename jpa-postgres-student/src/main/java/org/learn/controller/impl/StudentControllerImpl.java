@@ -3,6 +3,8 @@ package org.learn.controller.impl;
 import java.util.List;
 
 import org.learn.controller.IStudentController;
+import org.learn.dto.DtoStudent;
+import org.learn.dto.DtoSudentIU;
 import org.learn.entities.Student;
 import org.learn.services.IStudentService;
 import org.springframework.stereotype.Controller;
@@ -29,14 +31,14 @@ public class StudentControllerImpl implements IStudentController {
     @PostMapping(path = "/save")
     @Override
     @ResponseBody
-    public Student saveStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    public DtoStudent saveStudent(@RequestBody DtoSudentIU dtoStudent) {
+        return studentService.saveStudent(dtoStudent);
     }
 
     @GetMapping(path = "/all")
     @Override
     @ResponseBody
-    public List<Student> getAllStudents() {
+    public List<DtoStudent> getAllStudents() {
         return studentService.getAllStudents();
     }
 
