@@ -59,23 +59,27 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public void deleteStudentById(Long id) {
-        Student dbStudent=getStudentById(id);
-        if (dbStudent!=null) {
-             studentRepository.delete(dbStudent);
-        }
-       
+    Optional<Student> optional= studentRepository.findById(id);
+         if (optional.isPresent()) {
+                studentRepository.delete(optional.get());
+         }
+     
     }
 
     @Override
-    public Student updateStudent(Long id, Student student) {
-        Student dbStudent =getStudentById(id);
-        if (dbStudent!=null) {
-            dbStudent.setFirstName(student.getFirstName());
-            dbStudent.setLastName(student.getLastName());
-            dbStudent.setBirthOfDate(student.getBirthOfDate());
-            return studentRepository.save(dbStudent);
+    public DtoStudent updateStudent(Long id, DtoSudentIU dtoSudentIU) {
+        Optional<Student> optional= studentRepository.findById(id);
+        DtoStudent dtoStudent=new DtoStudent();
+        if (optional.isPresent()) {
+            Student student= optional.get();
+            BeanUtils.copyProperties(student, dtoStudent);
+            student.setFirstName(dtoSudentIU.getFirstName());
+            student.setLastName(dtoSudentIU.getLastName());
+            Student updatedStudent= studentRepository.save(student);
+            BeanUtils.copyProperties(updatedStudent, dtoStudent);
+            return dtoStudent;
         }
-        return null;    
+        return null;
     }
 
 }
