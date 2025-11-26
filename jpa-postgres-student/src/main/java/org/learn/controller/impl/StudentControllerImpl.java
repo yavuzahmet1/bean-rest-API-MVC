@@ -5,7 +5,6 @@ import java.util.List;
 import org.learn.controller.IStudentController;
 import org.learn.dto.DtoStudent;
 import org.learn.dto.DtoSudentIU;
-import org.learn.entities.Student;
 import org.learn.services.IStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +44,7 @@ public class StudentControllerImpl implements IStudentController {
     @GetMapping(path = "/all/{id}")
     @Override
     @ResponseBody
-    public Student getStudentById(@PathVariable Long id) {
+    public DtoStudent getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
 
@@ -58,8 +57,9 @@ public class StudentControllerImpl implements IStudentController {
    
     @PutMapping(path = "/update/{id}")
     @Override
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
-       return studentService.updateStudent(id, student);
+    @ResponseBody
+    public DtoStudent updateStudent(@PathVariable Long id, @RequestBody DtoSudentIU dtoSudentIU) {
+       return studentService.updateStudent(id, dtoSudentIU);
     }
 
 }
