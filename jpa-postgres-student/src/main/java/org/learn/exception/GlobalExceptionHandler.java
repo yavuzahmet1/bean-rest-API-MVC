@@ -7,34 +7,35 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        
-        // Hataları dön ve Map'e ekle
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField(); // Hatanın olduğu alan (örn: "email")
-            String errorMessage = error.getDefaultMessage();    // Hata mesajı (örn: "Email formatı geçersiz")
-            errors.put(fieldName, errorMessage);
-        });
-        
-        // Kullanıcıya 400 Bad Request ile birlikte hataları dön
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-}
+    // The specific type is being used instead of T in ResponseEntity and ApiError."
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError<Map<String, List<String>>>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
-private ApiError createApiError(Map<String,List<String>> errors) {
-    ApiError apiError = new ApiError();
-    apiError.setId(java.util.UUID.randomUUID().toString());
-    apiError.setTimestamp(new Date());
-    apiError.setErrors(errors);
-    return apiError;
+        Map<String, List<String>> errors = new HashMap<>();
+
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.computeIfAbsent(fieldName, key -> new ArrayList<>()).add(errorMessage);
+        });
+
+        // The type-fixed ApiError object is being created.
+        ApiError<Map<String, List<String>>> apiError = createApiError(errors);
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    // The helper method is also being fixed to the Map<String, List<String>> type.
+    private ApiError<Map<String, List<String>>> createApiError(Map<String, List<String>> errors) {
+        ApiError<Map<String, List<String>>> apiError = new ApiError<>();
+        apiError.setTimestamp(new Date());
+        apiError.setStatus(HttpStatus.BAD_REQUEST.value());
+        apiError.setErrors(errors);
+        return apiError;
+    }
 }
