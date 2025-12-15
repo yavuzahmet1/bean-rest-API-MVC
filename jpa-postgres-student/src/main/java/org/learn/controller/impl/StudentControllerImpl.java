@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.learn.controller.IStudentController;
 import org.learn.dto.DtoStudent;
-import org.learn.dto.DtoSudentIU;
+import org.learn.dto.DtoStudentIU;
 import org.learn.services.IStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +33,7 @@ public class StudentControllerImpl implements IStudentController {
     @PostMapping(path = "/save")
     @Override
     @ResponseBody
-    public DtoStudent saveStudent(@RequestBody @Valid DtoSudentIU dtoStudent) {
+    public DtoStudent saveStudent(@RequestBody @Valid DtoStudentIU dtoStudent) {
         return studentService.saveStudent(dtoStudent);
     }
 
@@ -61,8 +61,8 @@ public class StudentControllerImpl implements IStudentController {
     @PutMapping(path = "/update/{id}")
     @Override
     @ResponseBody
-    public DtoStudent updateStudent(@PathVariable Long id, @RequestBody DtoSudentIU dtoSudentIU) {
-       return studentService.updateStudent(id, dtoSudentIU);
+    public DtoStudent updateStudent(@PathVariable Long id, @RequestBody DtoStudentIU dtoStudentIU) {
+       return studentService.updateStudent(id, dtoStudentIU);
     }
 
 }
