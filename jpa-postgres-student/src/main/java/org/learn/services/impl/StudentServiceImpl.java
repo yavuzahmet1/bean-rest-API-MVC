@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.learn.dto.DtoStudent;
-import org.learn.dto.DtoSudentIU;
+import org.learn.dto.DtoStudentIU;
 import org.learn.entities.Student;
 import org.learn.repository.StudentRepository;
 import org.learn.services.IStudentService;
@@ -22,7 +22,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public DtoStudent saveStudent(DtoSudentIU dtoStudent) {
+    public DtoStudent saveStudent(DtoStudentIU dtoStudent) {
         Student student=new Student();
         BeanUtils.copyProperties(dtoStudent, student);
         Student savedStudent= studentRepository.save(student);
@@ -67,7 +67,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public DtoStudent updateStudent(Long id, DtoSudentIU dtoSudentIU) {
+    public DtoStudent updateStudent(Long id, DtoStudentIU dtoSudentIU) {
         Optional<Student> optional= studentRepository.findById(id);
         DtoStudent dtoStudent=new DtoStudent();
         if (optional.isPresent()) {
