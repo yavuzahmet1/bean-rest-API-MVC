@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DtoSudentIU {
+public class DtoStudentIU {
 
     @NotEmpty(message = "First name must not be empty")
     @Size(min = 2, max = 50, message = "First name must have between 2 and 50 characters")
